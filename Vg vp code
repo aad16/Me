@@ -1,0 +1,30 @@
+// Program: Plot Phase Velocity and Group Velocity vs Frequency
+
+// Given constants
+c = 3e8;  // Speed of light (m/s)
+
+// Using same frequency and cutoff ratio (from above)
+f_min = 5e9;    
+f_max = 15e9;
+f = linspace(f_min, f_max, 1000);
+
+a = 6.1e-2;
+b = 4.6e-2;
+epsilon0 = 8.854e-12;
+mu0 = 4 * %pi * 1e-7;
+fc = (1 / (2 * sqrt(mu0 * epsilon0))) * sqrt((1/a)^2 + (1/b)^2);
+fc_ratio = fc ./ f;
+
+// Phase and Group velocities
+vp = c ./ sqrt(1 - fc_ratio.^2);
+vg = c .* sqrt(1 - fc_ratio.^2);
+
+// Plotting
+scf(2);
+plot(f/1e9, vp, 'b', 'LineWidth', 2);
+plot(f/1e9, vg, 'r', 'LineWidth', 2);
+title('Variation of Phase and Group Velocity with Frequency');
+xlabel('Frequency (GHz)');
+ylabel('Velocity (m/s)');
+legend(['Phase Velocity', 'Group Velocity'], 'location', 'upper left');
+grid();
